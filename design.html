@@ -1,0 +1,944 @@
+<! DOCTYPE html>    
+<html>    
+    <head>    
+        <meta http-equiv = "Content-Type"    
+            content = "text/html; charset=UTF-8" />    
+        <title> Example of create a menu item animation hover using jquery </title>    
+        <meta name = "description"/>    
+        <meta content = "width=800, initial-scale=1"    
+        name = "viewport" />    
+<script src =    
+"https://code.jquery.com/jquery-3.5.1.min.js">    
+        </script>                 
+        <script src =    
+"https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"> </script>            
+<style>  
+h1 {  
+  position: relative;  
+  color: #FFF;  
+  font-weight: 100;  
+  font-size: 40px;  
+  padding: 0;  
+  margin: 0;  
+  text-align: center;  
+  line-height: 1;  
+  text-shadow: 0 0 10px #ff006c, 0 0 20px #ff006c, 0 0 30px #ff006c, 0 0 40px #ff417d, 0 0 70px #ff417d, 0 0 80px #ff417d, 0 0 100px #ff417d, 0 0 150px #ff417d;  
+}  
+h2 {  
+  font-weight: 200;  
+  font-size: 30px;  
+  padding: 10;  
+  margin: 10;  
+  line-height: 1;  
+  color: black;  
+  letter-spacing: 2px;  
+  text-align: center;  
+}  
+*, *::after,  
+*::before {  
+    box-sizing: border-box; }  
+:root {  
+    font-size: 13px;  
+}  
+body {  
+    margin: 0;  
+    --color-text: #111;  
+    --color-bg: #edeee9;  
+    --color-link: #000;  
+    --color-link-hover: #000;  
+    --color-menu: #000;  
+    --color-menu-hover: #f32015;  
+    color: var(--color-text);  
+    background-color: var(--color-bg);  
+    --cursor-stroke: #000;  
+    --cursor-fill: #000;  
+    --cursor-stroke-width: 1px;  
+    -webkit-font-smoothing: antialiased;  
+    -moz-osx-font-smoothing: grayscale;  
+    font-family: degular, sans-serif;  
+}  
+.js .loading::before {  
+    content: ' ';  
+    position: fixed;  
+    z-index: 1000;  
+}  
+.js .loading::after {  
+    content: ' ';  
+    position: fixed;  
+    z-index: 1000;  
+}  
+.js .loading::before {  
+    top: 0;  
+    left: 0;  
+    width: 100%;  
+    height: 100%;  
+    background: var(--color-bg);  
+}  
+.js .loading::after {  
+    top: 50%;  
+    left: 50%;  
+    width: 60px;  
+    height: 60px;  
+    margin: -30px 0 0 -30px;  
+    opacity: 0.4;  
+    background: var(--color-link);  
+    animation: loaderAnim 0.7s linear infinite alternate forwards;  
+}  
+@keyframes loaderAnim {  
+    to {  
+        opacity: 1;  
+        transform: scale3d(0.5,0.5,1);  
+    }  
+}  
+a {  
+    text-decoration: none;  
+    color: var(--color-link);  
+    outline: none;  
+    cursor: pointer;  
+}  
+a:hover,  
+a:focus {  
+    color: var(--color-link-hover);  
+    outline: none;  
+}  
+.frame {  
+    top: 0;  
+    padding: 1rem 1.5rem;  
+    position: fixed;  
+    z-index: 1000;  
+    background: #f0f0f0;  
+    width: 100%;  
+    display: flex;  
+    text-transform: uppercase;  
+}  
+.frame__title {  
+    font-size: 1rem;  
+    margin: 0;  
+    font-weight: 400;  
+}  
+  
+.frame__links {  
+    margin: 0.5rem 0;  
+}  
+.frame__links a {  
+    border-bottom: 1px solid currentColor;  
+    transition: 0.2s border-color;  
+}  
+.frame__links a:hover,  
+.frame__links a:focus {  
+    border-color: transparent;  
+}  
+.frame__links a:not(:last-child) {  
+    margin-right: 1rem;  
+}  
+.frame__button {  
+    word-spacing: 0.75rem;  
+    color: var(--color-link);  
+    margin-left: auto;  
+}  
+.menu {  
+    padding: 10rem 0 20vh 0;  
+    width: 90vw;  
+    position: relative;  
+    display: flex;  
+    flex-direction: column;  
+    text-align: right;  
+    -webkit-touch-callout: none;  
+    -webkit-user-select: none;  
+    -moz-user-select: none;  
+    -ms-user-select: none;  
+    user-select: none;  
+    counter-reset: menucounter;  
+}  
+.menu__item {  
+    flex: none;  
+    display: flex;  
+    justify-content: flex-end;  
+    position: relative;  
+    padding-left: 5rem;  
+}  
+.menu__item::before {  
+    counter-increment: menucounter;  
+    content: counters(menucounter, ".", decimal-leading-zero);  
+    position: absolute;  
+    left: 0;  
+    border-left: 3px solid currentColor;  
+    top: 20%;  
+    height: 60%;  
+    padding-left: 1rem;  
+    display: flex;  
+    align-items: center;  
+    line-height: 1;  
+    font-weight: bold;  
+    opacity: 0;  
+    transform: translateX(-1rem);  
+    transition: transform 0.3s, opacity 0.3s;  
+}  
+.menu__item:hover::before {  
+    opacity: 1;  
+    transform: translateX(0);  
+}  
+.menu__item-text {  
+    position: relative;  
+    cursor: pointer;  
+    padding: 0.5rem;  
+    display: block;  
+    overflow: hidden;  
+    font-size: 6vw;  
+}  
+.menu__item-textinner {  
+    display: block;  
+    font-family: goldenbook, serif;  
+    font-weight: 300;  
+    text-transform: uppercase;  
+    white-space: nowrap;  
+    color: var(--color-menu);  
+}  
+.js .menu__item-textinner {  
+    transform: translateY(100%);  
+}  
+.menu__item:hover .menu__item-textinner {  
+    color: var(--color-menu-hover);  
+}  
+.menu__item-sub {  
+    display: none;  
+    text-transform: uppercase;  
+    font-weight: bold;  
+    white-space: nowrap;  
+    align-items: center;  
+    position: relative;  
+    margin-left: 2rem;  
+    padding-left: 3rem;  
+    opacity: 0;  
+    transform: translateX(-1rem);  
+    transition: transform 0.3s, opacity 0.3s;  
+}  
+.menu__item:hover .menu__item-sub {  
+    opacity: 1;  
+    transform: translateX(0);  
+}  
+.menu__item-sub::before {  
+    content: '';  
+    position: absolute;  
+    left: 0;  
+    top: 15%;  
+    width: 1px;  
+    height: 70%;  
+    background: currentColor;  
+    transform-origin: 0 100%;  
+    transform: rotate(22.5deg) scale3d(1,0,1);  
+    transition: transform 0.3s;  
+}  
+.menu__item:hover .menu__item-sub::before {  
+    transform: rotate(22.5deg) scale3d(1,1,1);  
+}  
+.hover-reveal {  
+    position: absolute;  
+    z-index: -1;  
+    width: 220px;  
+    height: 320px;  
+    top: 0;  
+    left: 0;  
+    pointer-events: none;  
+    opacity: 0;  
+}  
+.hover-reveal__inner {  
+    overflow: hidden;  
+}  
+.hover-reveal__inner {  
+    width: 100%;  
+    height: 100%;  
+    position: relative;  
+}  
+.hover-reveal__img {  
+    width: 100%;  
+    height: 100%;  
+    position: relative;  
+}  
+.hover-reveal__img {  
+    background-size: cover;  
+    background-position: 50% 50%;  
+}  
+.cursor {  
+    display: none;  
+}  
+.credits {  
+    align-self: flex-start;  
+    padding: 5rem 0 0 0;  
+}  
+.credits a {  
+    text-decoration: underline;  
+}  
+@media screen and (min-width: 53em) {  
+    .frame {  
+        flex-direction: column;  
+        align-items: flex-end;  
+        text-align: right;  
+        background: none;  
+        height: 50vh;  
+        pointer-events: none;  
+        padding-bottom: 0;  
+    }  
+    .frame__links a:not(:last-child) {  
+        margin-right: 0;  
+    }  
+    .frame__links {  
+        margin: 0.5rem 0 2rem;  
+        justify-self: start;  
+    }  
+    .frame__links a {  
+        margin-left: 0.5rem;  
+        pointer-events: auto;  
+    }  
+    .frame__button {  
+        cursor: not-allowed;  
+        pointer-events: auto;  
+        margin-top: auto;  
+        transform: translateY(50%);  
+    }  
+    .menu {  
+        padding-top: 20vh;  
+    }  
+    .menu__item {  
+        padding-left: 25vw;  
+        justify-content: initial;  
+    }  
+    .menu__item-text {  
+        padding: 1vh 0;  
+        font-size: 4vw;  
+    }  
+    .menu__item-sub {  
+        display: flex;  
+    }  
+}  
+  
+@media (any-pointer: fine) {  
+    .cursor {  
+        position: fixed;  
+        top: 0;  
+        left: 0;  
+        display: block;  
+        pointer-events: none;  
+    }  
+    .cursor__inner {  
+        fill: var(--cursor-fill);  
+        stroke: var(--cursor-stroke);  
+        stroke-width: var(--cursor-stroke-width);  
+        opacity: 0.3;  
+    }  
+    .credits {  
+        padding-left: 25vw;  
+    }  
+}  
+  
+html.has-scroll-smooth {  
+    overflow: hidden;   
+}  
+    
+html.has-scroll-dragging {  
+    -webkit-user-select: none;  
+    -moz-user-select: none;  
+    -ms-user-select: none;  
+    user-select: none;   
+}  
+    
+.has-scroll-smooth body {  
+    overflow: hidden;   
+}  
+    
+.has-scroll-smooth [data-scroll-container] {  
+    min-height: 100vh;   
+}  
+    
+.c-scrollbar {  
+    position: absolute;  
+    right: 0;  
+    top: 0;  
+    width: 11px;  
+    height: 100vh;  
+    transform-origin: center right;  
+    transition: transform 0.3s, opacity 0.3s;  
+    opacity: 0;   
+}  
+.c-scrollbar:hover {  
+    transform: scaleX(1.45);   
+}  
+.c-scrollbar:hover, .has-scroll-scrolling .c-scrollbar, .has-scroll-dragging .c-scrollbar {  
+    opacity: 1;   
+}  
+    
+.c-scrollbar_thumb {  
+    position: absolute;  
+    top: 0;  
+    right: 0;  
+    background-color: black;  
+    opacity: 0.5;  
+    width: 7px;  
+    border-radius: 10px;  
+    margin: 2px;  
+    cursor: -webkit-grab;  
+    cursor: grab;   
+}  
+.has-scroll-dragging .c-scrollbar_thumb {  
+    cursor: -webkit-grabbing;  
+    cursor: grabbing;   
+}  
+</style>  
+  
+<body class="loading">  
+  <h1> Example </h1>  
+  <h2> Create a menu item item animation on hover </h2>  
+    <main>  
+        <div class="frame">  
+            <div class="frame__title-wrap">  
+                  
+                <div class="frame__links">  
+                    <a href="https://tympanus.net/codrops/?p=50362" class="frame__link">Article</a>  
+                    <a href="https://github.com/codrops/RapidImageHoverMenu/" class="frame__link"> Service </a>  
+                </div>  
+            </div>  
+            <span class="frame__button" aria-hidden="true"> Menu</span>  
+        </div>  
+        <nav class="menu">  
+            <a class="menu__item" data-img="https://source.unsplash.com/WLUHO9A_xik/1600x900">  
+                <span class="menu__item-text"><span class="menu__item-textinner"> Levis </span></span>  
+                <span class="menu__item-sub"> Jeans, tops etc </span>  
+            </a>   
+                <span class="menu__item-text"><span class="menu__item-textinner"> U.S. Polo </span></span>  
+                <span class="menu__item-sub">Fashion Week </span>  
+            </a>  
+                <span class="menu__item-text"><span class="menu__item-textinner">Franklin Roth</span></span>  
+                <span class="menu__item-sub">Amber Convention London</span>  
+            </a>  
+                <span class="menu__item-text"><span class="menu__item-textinner">Cristie Noe</span></span>  
+                <span class="menu__item-sub">Tokyo Summer Trends</span>  
+            </a>  
+                <span class="menu__item-text"><span class="menu__item-textinner">Wilma Quest</span></span>  
+                <span class="menu__item-sub">2021 West End New York</span>  
+            </a>  
+                <span class="menu__item-text"><span class="menu__item-textinner">Gary Winston</span></span>  
+                <span class="menu__item-sub">Sunset Festival Greenwich</span>  
+            </a>  
+                <span class="menu__item-text"><span class="menu__item-textinner">Nesta Freeman</span></span>  
+                <span class="menu__item-sub">Spirit Garments Jakarta</span>  
+            </a>  
+                <span class="menu__item-text"><span class="menu__item-textinner">Jolanda French</span></span>  
+                <span class="menu__item-sub">Bluehouse Fashion Toronto</span>  
+            </a>  
+                <span class="menu__item-text"><span class="menu__item-textinner">Samantha Dunne</span></span>  
+                <span class="menu__item-sub">Glamour Week Christchurch</span>  
+            </a>  
+                <span class="menu__item-text"><span class="menu__item-textinner">Tony Albert</span></span>  
+                <span class="menu__item-sub">Piu Bella Fashion Rome</span>  
+            </a>  
+                <span class="menu__item-text"><span class="menu__item-textinner">Jacky Speed</span></span>  
+                <span class="menu__item-sub">Sea Season Kuala Lumpur</span>  
+            </a>  
+                <span class="menu__item-text"><span class="menu__item-textinner">Carlton Holle</span></span>  
+                <span class="menu__item-sub">Inspire Fashion Casablanca</span>  
+            </a>  
+                <span class="menu__item-text"><span class="menu__item-textinner">Kylla Maushet</span></span>  
+                <span class="menu__item-sub">One to Ten Moscow</span>  
+            </a>  
+                <span class="menu__item-text"><span class="menu__item-textinner">Fernando Castello</span></span>  
+                <span class="menu__item-sub">Miksa Style Week Lisbon</span>  
+            </a>  
+                <span class="menu__item-text"><span class="menu__item-textinner">Sofie Henriette</span></span>  
+                <span class="menu__item-sub">Free Fashion Budapest</span>  
+            </a>  
+                <span class="menu__item-text"><span class="menu__item-textinner">Adelie Bisset</span></span>  
+                <span class="menu__item-sub">Couture Night Paris</span>  
+            </a>  
+                <span class="menu__item-text"><span class="menu__item-textinner">Takato Yang</span></span>  
+                <span class="menu__item-sub">Modern Touch Hong Kong</span>  
+            </a>  
+                <span class="menu__item-text"><span class="menu__item-textinner">Hadrian Kaiser</span></span>  
+                <span class="menu__item-sub">Neverland Fashion Madrid</span>  
+            </a>  
+</body>  
+<script>  
+  function newRequire(name, jumped) {  
+    if (!cache[name]) {  
+      if (!modules[name]) {  
+        var currentRequire = typeof parcelRequire === 'function' && parcelRequire;  
+        if (!jumped && currentRequire) {  
+          return currentRequire(name, true);  
+        }  
+        if (previousRequire) {  
+          return previousRequire(name, true);  
+        }  
+        if (nodeRequire && typeof name === 'string') {  
+          return nodeRequire(name);  
+        }  
+        var err = new Error('Cannot find module \'' + name + '\'');  
+        err.code = 'MODULE_NOT_FOUND';  
+        throw err;  
+      }  
+      localRequire.resolve = resolve;  
+      localRequire.cache = {};  
+  
+      var module = cache[name] = new newRequire.Module(name);  
+  
+      modules[name][0].call(module.exports, localRequire, module, module.exports, this);  
+    }  
+  
+    return cache[name].exports;  
+  
+    function localRequire(x){  
+      return newRequire(localRequire.resolve(x));  
+    }  
+  
+    function resolve(x){  
+      return modules[name][1][x] || x;  
+    }  
+  }    
+  var name = config.name,  
+      isFunc = _isFunction(config),  
+      Plugin = name && !isFunc && config.init ? function () {  
+    this._props = [];  
+  } : config,  
+  instanceDefaults = {  
+    init: _emptyFunc,  
+    render: _renderPropTweens,  
+    add: _addPropTween,  
+    kill: _killPropTweensOf,  
+    modifier: _addPluginModifier,  
+    rawVars: 0  
+  },  
+      statics = {  
+    targetTest: 0,  
+    get: 0,  
+    getSetter: _getSetter,  
+    aliases: {},  
+    register: 0  
+  };  
+      if (_isFunction(child)) {  
+        child = Tween.delayedCall(0, child);  
+      } else {  
+        return this;  
+      }  
+    }  
+    if (props === "all" || props === true) {  
+      style.cssText = "";  
+      clearTransforms = 1;  
+    } else {  
+      propsprops = props.split(",");  
+      i = props.length;  
+  
+      while (--i > -1) {  
+        prop = props[i];  
+  
+        if (_transformProps[prop]) {  
+          clearTransforms = 1;  
+          propprop = prop === "transformOrigin" ? _transformOriginProp : _transformProp;  
+        }  
+  
+        _removeProperty(target, prop);  
+      }  
+    }  
+  var style = getComputedStyle( elem );  
+  if ( !style ) {  
+    return;  
+  }  
+  var reURL = /url\((['"])?(.*?)\1\)/gi;  
+  var matches = reURL.exec( style.backgroundImage );  
+  while ( matches !== null ) {  
+    var url = matches && matches[2];  
+    if ( url ) {  
+      this.addBackground( url, elem );  
+    }  
+    matches = reURL.exec( style.backgroundImage );  
+  }  
+};  
+ImagesLoaded.prototype.addImage = function( img ) {  
+  var loadingImage = new LoadingImage( img );  
+  this.images.push( loadingImage );  
+};  
+  
+ImagesLoaded.prototype.addBackground = function( url, elem ) {  
+  var background = new Background( url, elem );  
+  this.images.push( background );  
+};  
+  
+ImagesLoaded.prototype.check = function() {  
+  var _this = this;  
+  this.progressedCount = 0;  
+  this.hasAnyBroken = false;  
+  if ( !this.images.length ) {  
+    this.complete();  
+    return;  
+  }  
+  
+  function onProgress( image, elem, message ) {  
+    setTimeout( function() {  
+      _this.progress( image, elem, message );  
+    });  
+  }  
+  
+  this.images.forEach( function( loadingImage ) {  
+    loadingImage.once( 'progress', onProgress );  
+    loadingImage.check();  
+  });  
+};  
+  
+ImagesLoaded.prototype.progress = function( image, elem, message ) {  
+  this.progressedCount++;  
+  thisthis.hasAnyBroken = this.hasAnyBroken || !image.isLoaded;  
+  this.emitEvent( 'progress', [ this, image, elem ] );  
+  if ( this.jqDeferred && this.jqDeferred.notify ) {  
+    this.jqDeferred.notify( this, image );  
+  }  
+  if ( this.progressedCount == this.images.length ) {  
+    this.complete();  
+  }  
+  
+  if ( this.options.debug && console ) {  
+    console.log( 'progress: ' + message, image, elem );  
+  }  
+};  
+  
+ImagesLoaded.prototype.complete = function() {  
+  var eventName = this.hasAnyBroken ? 'fail' : 'done';  
+  this.isComplete = true;  
+  this.emitEvent( eventName, [ this ] );  
+  this.emitEvent( 'always', [ this ] );  
+  if ( this.jqDeferred ) {  
+    var jqMethod = this.hasAnyBroken ? 'reject' : 'resolve';  
+    this.jqDeferred[ jqMethod ]( this );  
+  }  
+};  
+function LoadingImage( img ) {  
+  this.img = img;  
+}  
+LoadingImage.prototype = Object.create( EvEmitter.prototype );  
+LoadingImage.prototype.check = function() {  
+    var isComplete = this.getIsImageComplete();  
+  if ( isComplete ) {  
+    this.confirm( this.img.naturalWidth !== 0, 'naturalWidth' );  
+    return;  
+  }  
+  this.proxyImage = new Image();  
+  this.proxyImage.addEventListener( 'load', this );  
+  this.proxyImage.addEventListener( 'error', this );  
+  this.img.addEventListener( 'load', this );  
+  this.img.addEventListener( 'error', this );  
+  thisthis.proxyImage.src = this.img.src;  
+};  
+LoadingImage.prototype.getIsImageComplete = function() {  
+    
+  return this.img.complete && this.img.naturalWidth;  
+};  
+LoadingImage.prototype.confirm = function( isLoaded, message ) {  
+  this.isLoaded = isLoaded;  
+  this.emitEvent( 'progress', [ this, this.img, message ] );  
+};  
+ImagesLoaded.makeJQueryPlugin = function( jQuery ) {  
+  jQueryjQuery = jQuery || window.jQuery;  
+  if ( !jQuery ) {  
+    return;  
+  }    
+function _createClass(Constructor, protoProps, staticProps) {  
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);  
+  if (staticProps) _defineProperties(Constructor, staticProps);  
+  return Constructor;  
+}  
+      var name = event.type.replace(this.namespace, '');  
+      var list = this.listeners[name];  
+      if (!list || list.length === 0) return;  
+      list.forEach(function (func) {  
+        switch (name) {  
+          case 'scroll':  
+            return func(_this4.instance);  
+  
+          case 'call':  
+            return func(_this4.callValue, _this4.callWay, _this4.callObj);  
+  
+          default:  
+            return func();  
+        }  
+      });  
+    }  
+  }, {  
+    key: "startScroll",  
+    value: function startScroll() {}  
+  }, {  
+    key: "stopScroll",  
+    value: function stopScroll() {}  
+  }, {  
+    key: "setScroll",  
+    value: function setScroll(x, y) {  
+      this.instance.scroll = {  
+        x: 0,  
+        y: 0  
+      };  
+    }  
+  }, {  
+    key: "destroy",  
+    value: function destroy() {  
+      var _this5 = this;  
+  
+      window.removeEventListener('resize', this.checkResize, false);  
+      Object.keys(this.listeners).forEach(function (event) {  
+        _this5.el.removeEventListener(_this5.namespace + event, _this5.checkEvent, false);  
+      });  
+      this.listeners = {};  
+      this.scrollToEls.forEach(function (el) {  
+        el.removeEventListener('click', _this5.setScrollTo, false);  
+      });  
+    }  
+  }]);  
+  
+  return _default;  
+}();  
+      function hasScrollableSpace(el, axis) {  
+        if (axis === 'Y') {  
+          return el.clientHeight + ROUNDING_TOLERANCE < el.scrollHeight;  
+        }  
+  
+        if (axis === 'X') {  
+          return el.clientWidth + ROUNDING_TOLERANCE < el.scrollWidth;  
+        }  
+      }  
+      function findScrollableParent(el) {  
+        while (el !== d.body && isScrollable(el) === false) {  
+          elel = el.parentNode || el.host;  
+        }  
+        return el;  
+      }    
+      function step(context) {  
+        var time = now();  
+        var value;  
+        var currentX;  
+        var currentY;  
+        var elapsed = (time - context.startTime) / SCROLL_TIME;  
+      function smoothScroll(el, x, y) {  
+        var scrollable;  
+        var startX;  
+        var startY;  
+        var method;  
+        var startTime = now();   
+        if (el === d.body) {  
+          scrollable = w;  
+          startX = w.scrollX || w.pageXOffset;  
+          startY = w.scrollY || w.pageYOffset;  
+          method = original.scroll;  
+        } else {  
+          scrollable = el;  
+          startX = el.scrollLeft;  
+          startY = el.scrollTop;  
+          method = scrollElement;  
+        }   
+        step({  
+          scrollable: scrollable,  
+          method: method,  
+          startTime: startTime,  
+          startX: startX,  
+          startY: startY,  
+          x: x,  
+          y: y  
+        });  
+      }   
+  
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;  
+var hasOwnProperty = Object.prototype.hasOwnProperty;  
+var propIsEnumerable = Object.prototype.propertyIsEnumerable;  
+  
+function toObject(val) {  
+  if (val === null || val === undefined) {  
+    throw new TypeError('Object.assign cannot be called with null or undefined');  
+  }  
+  
+  return Object(val);  
+}  
+  
+function shouldUseNative() {  
+  try {  
+    if (!Object.assign) {  
+      return false;  
+    }   
+    var test1 = new String('abc');   
+    test1[5] = 'de';  
+    var currentX = calcBezier(aGuessT, mX1, mX2) - aX;  
+    aGuessT -= currentX / currentSlope;  
+  }  
+  
+  return aGuessT;  
+}  
+  
+function LinearEasing(x) {  
+  return x;  
+}  
+  
+var src$1 = function bezier(mX1, mY1, mX2, mY2) {  
+  if (!(0 <= mX1 && mX1 <= 1 && 0 <= mX2 && mX2 <= 1)) {  
+    throw new Error('bezier x values must be in [0, 1] range');  
+  }  
+  
+      var scrollStart = parseFloat(this.instance.delta.y);  
+      var scrollTarget = Math.max(0, Math.min(offset, this.instance.limit)); // Make sure our target is in the scroll boundaries  
+  
+      var scrollDiff = scrollTarget - scrollStart;  
+  
+      var render = function render(p) {  
+        if (disableLerp) _this9.setScroll(_this9.instance.delta.x, scrollStart + scrollDiff * p);else _this9.instance.delta.y = scrollStart + scrollDiff * p;  
+      };   
+      var start = Date.now();  
+  
+      var loop = function loop() {  
+        var p = (Date.now() - start) / duration;   
+  
+        if (p > 1) {  
+            
+          render(1);  
+          _this9.animatingScroll = false;  
+          if (duration == 0) _this9.update();  
+          if (callback) callback();  
+        } else {  
+          _this9.scrollToRaf = requestAnimationFrame(loop);  
+          render(easing(p));  
+        }  
+      };  
+  
+      loop();  
+    }  
+  }, {  
+    key: "update",  
+    value: function update() {  
+      this.setScrollLimit();  
+      this.addSections();  
+      this.addElements();  
+      this.detectElements();  
+      this.updateScroll();  
+      this.transformElements(true);  
+      this.reinitScrollBar();  
+      this.checkScroll(true);  
+    }  
+  }, {  
+    key: "startScroll",  
+    value: function startScroll() {  
+      this.stop = false;  
+    }  
+  }, {  
+    key: "stopScroll",  
+    value: function stopScroll() {  
+      this.stop = true;  
+    }  
+  }, {  
+    key: "setScroll",  
+    value: function setScroll(x, y) {  
+      this.instance = _objectSpread2({}, this.instance, {  
+        scroll: {  
+          x: x,  
+          y: y  
+        },  
+        delta: {  
+          x: x,  
+          y: y  
+        },  
+        speed: 0  
+      });  
+    }  
+  }, {  
+    key: "destroy",  
+    value: function destroy() {  
+      _get(_getPrototypeOf(_default.prototype), "destroy", this).call(this);  
+  
+      this.stopScrolling();  
+      this.html.classList.remove(this.smoothClass);  
+      this.vs.destroy();  
+      this.destroyScrollBar();  
+      window.removeEventListener('keydown', this.checkKey, false);  
+    }  
+  }]);  
+  
+  return _default;  
+}(_default);  
+  
+var _default_default2 = _default$3;  
+exports.default = _default2;  
+},{}],"NJSX":[function(require,module,exports) {  
+module.exports = "1.dc197a9a.jpg";  
+},{}],"i4z2":[function(require,module,exports) {  
+module.exports = "10.5e22fdc3.jpg";  
+},{}],"PKe7":[function(require,module,exports) {  
+module.exports = "11.a56b8aeb.jpg";  
+},{}],"CS4A":[function(require,module,exports) {  
+module.exports = "12.b5a57fd7.jpg";  
+},{}],"uYgX":[function(require,module,exports) {  
+module.exports = "13.3858c623.jpg";  
+},{}],"hIAS":[function(require,module,exports) {  
+module.exports = "14.c732d2b3.jpg";  
+},{}],"TjQ6":[function(require,module,exports) {  
+module.exports = "15.61b13bcc.jpg";  
+},{}],"AgKW":[function(require,module,exports) {  
+module.exports = "16.39461312.jpg";  
+},{}],"oxYq":[function(require,module,exports) {  
+module.exports = "17.7c008703.jpg";  
+},{}],"f9Jt":[function(require,module,exports) {  
+module.exports = "18.81a1401f.jpg";  
+},{}],"BVGL":[function(require,module,exports) {  
+module.exports = "19.6d803788.jpg";  
+},{}],"dFor":[function(require,module,exports) {  
+module.exports = "2.3ca6bb44.jpg";  
+},{}],"ctUQ":[function(require,module,exports) {  
+module.exports = "20.b400b781.jpg";  
+},{}],"P8tY":[function(require,module,exports) {  
+module.exports = "3.a433b89d.jpg";  
+},{}],"kPmT":[function(require,module,exports) {  
+module.exports = "4.c6d96be5.jpg";  
+},{}],"VqBz":[function(require,module,exports) {  
+module.exports = "5.689b68fd.jpg";  
+},{}],"gtVS":[function(require,module,exports) {  
+module.exports = "6.e96dcfff.jpg";  
+},{}],"HYBC":[function(require,module,exports) {  
+module.exports = "7.2d66e3ed.jpg";  
+},{}],"KW6U":[function(require,module,exports) {  
+module.exports = "8.f4323fe0.jpg";  
+},{}],"xNmy":[function(require,module,exports) {  
+module.exports = "9.c9233dac.jpg";  
+},{}],"m7Bz":[function(require,module,exports) {  
+{  
+"use strict";  
+  
+Object.defineProperty(exports, "__esModule", {  
+  value: true  
+});  
+exports.default = void 0;  
+  
+var _gsap = require("gsap");  
+  
+var _utils = require("./utils");  
+  
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }  
+  
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptordescriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }  
+  
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }  
+var images = Object.entries(require('../img/*.jpg'));   
+var mousepos = {  
+  x: 0,  
+  y: 0  
+};   
+  
+var mousePosCache = mousepos;  
+var direction = {  
+  x: mousePosCache.x - mousepos.x,  
+  y: mousePosCache.y - mousepos.y  
+};   
+  
+window.addEventListener('mousemove', function (ev) {  
+  return mousepos = (0, _utils.getMousePos)(ev);  
+});  
+    this.inMenuPosition = inMenuPosition;   
+  
+    this.animatableProperties = animatableProperties;   
+  
+    thisthis.DOM.textInner = this.DOM.el.querySelector('.menu__item-textinner');   
+  
+    this.layout();   
+  
+    this.initEvents();  
+  }  
+</script>  
+</body>  
+</html>  

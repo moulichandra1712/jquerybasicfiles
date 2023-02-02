@@ -1,0 +1,147 @@
+<1DOCTYPE html>
+<html>
+<head>
+<met name ="viewport" content="width=device-width,initial-scale=1">
+<title>
+checkbox vadilation using prop  method in jquery
+</title>
+<script src ="https://code.jquery.com/jquery-3.5.1mim.js">
+</script>
+<script>
+$(document).ready(function(){
+my function+terms=function my_function_terms(status,str){
+if (status=='NOTOK'){
+$('#terms1').css(
+{
+"border-color":"red";
+"border-width":"2px";
+"border-style":"solid"
+}
+);
+}
+else
+{
+$('#terms1').css(
+{
+'border-color':","border-width":"0px"
+}
+);
+}
+$('#msg_terms').html(str);
+}
+$("#terms").change(function()
+{
+var ckb_status=$('#terms').prop('checked');
+if(ckb_status)
+{
+my_function_terms("OK","tha ks for registration.......");
+}
+elsemy_function_terms("NOTOK","YPU MUST  AGREE TO TERMS AND CONDTIONS BEFORE SUBMIT THE FORM ");
+}
+}
+);
+$("#b1").click(function(event)
+{
+var ckb_status=$("#terms").prop('checked');
+if(ckb_status)
+{
+else{
+my_function_terms("NOTOK","please agree the terns abd conditions before submit the form");
+}
+})
+})
+</script>
+<style>
+h1{
+color :green;
+}
+h5{
+color:green;
+}
+h2{
+color:green;
+}
+p{
+color:red;
+}
+b{
+color:blue;
+font-size:40px;
+}
+body{
+background-color:pink;
+</style>
+</head>
+<body>
+<table class='table'align='center'>
+<caption>
+<h2>registration form </h2></caption><br><br>
+<tr>
+<td>
+<label> enter your name:</;label> 
+<input type ="textbox"value=""name='name1'><br><br
+</td>
+</tr>
+<tr>
+<td>
+<label>enter your emailid:</label>
+<input type ="email"value=""name='name2'><br><br>
+</td>
+</tr>
+<tr>
+<td>
+<label> enter your password:</label>
+<input type ="password"value=""name''name3><br><br>
+</td>  
+</tr>  
+<tr>  
+<td >  
+<span class='form-group' id=terms1>  
+<input type=checkbox value=yes name='terms1' id='terms'>  
+I Agree to <a href='#' >Terms & Conditions </a>  
+</span>  
+</td>  
+<td>  
+<div id=msg_terms name=msg_terms>  
+</div>  
+</td>  
+</tr>  
+<tr>  
+<td colspan=2>  
+<input type=button id=b1 class=b1 value='Register'>  
+</td>  
+</tr>  
+</table>  
+</body>  
+</html>  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

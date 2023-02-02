@@ -1,0 +1,124 @@
+
+<! DOCTYPE html>  
+<html>  
+<head>  
+<meta name="viewport" content="width=device-width, initial-scale=1">  
+<title>  
+Checkbox validation using prop method in jQuery  
+</title>  
+<script src="https://code.jquery.com/jquery-3.5.1.min.js">  
+</script>  
+<script>  
+$(document).ready (function () {  
+my_function_terms=function my_function_terms(status,str){  
+if (status=='NOTOK'){  
+$('#terms1').css (  
+{  
+"border-color": "red",  
+"border-width":"1px",  
+"border-style":"solid"  
+}  
+);  
+}  
+else  
+{  
+$('#terms1').css (  
+{  
+'border-color': '',"border-width":"0px"  
+}  
+);  
+}  
+$('#msg_terms').html (str);  
+}  
+///////  
+///////// Terms & conditions //////////  
+$("#terms").change (function ()  
+{  
+var ckb_status = $("#terms").prop('checked');  
+if(ckb_status)  
+{  
+my_function_terms ("OK"," Thanks for Registration...........");  
+}  
+else  
+{  
+my_function_terms("NOTOK","You must agree to terms and conditions before submit the form");  
+}  
+}  
+);  
+$("#b1").click (function (event)  
+{  
+var ckb_status = $("#terms").prop('checked');  
+if (ckb_status)  
+{  
+my_function_terms("OK","Thanks .. ");  
+}  
+else  
+{  
+my_function_terms("NOTOK", "please agree the terms and conditions before submit the form");  
+}  
+})  
+})  
+</script>  
+<style>  
+h1 {  
+color: green;  
+}  
+h5 {  
+color: green;  
+}  
+h2 {  
+color: green;  
+}  
+p {  
+color: red;  
+}  
+b {  
+color: blue;  
+font-size: 38px;  
+}  
+body{  
+background-color: pink;  
+</style>  
+</head>  
+<body>  
+<table class='table' align="center" >  
+<caption >  
+<h2> Registration Form </h2> </caption> <br> <br>  
+<tr>  
+<td >  
+<label> Enter Your Name : </label>  
+<input type="textbox" value="" name='name1'> <br> <br>  
+</td>  
+</tr>  
+<tr>  
+<td >  
+<label> Enter Your Email: </label>  
+<input type="email" value="" name='name2'> <br> <br>  
+</td>  
+</tr>  
+<tr>  
+<td >  
+<label> Enter Your Password: </label>  
+<input type="password" value="" name='name3'> <br> <br>  
+</td>  
+</tr>  
+<tr>  
+<td >  
+<span class='form-group' id=terms1>  
+<input type=checkbox value=yes name='terms1' id='terms'>  
+I Agree to <a href='#' >Terms & Conditions </a>  
+</span>  
+</td>  
+<td>  
+<div id=msg_terms name=msg_terms>  
+</div>  
+</td>  
+</tr>  
+<tr>  
+<td colspan=2>  
+<input type=button id=b1 class=b1 value='Register'>  
+</td>  
+</tr>  
+</table>  
+</body>  
+</html>  
